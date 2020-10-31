@@ -1,12 +1,15 @@
 #name, parentheses, and tags: clean up
 from bs4 import BeautifulSoup
-import urllib
+import urllib.request
 import pandas as pd
+import html.parser
+import unicodedata
 
 BASE_URL = 'http://www.imsdb.com'
 URL = 'http://www.imsdb.com/TV/Seinfeld.html'
-r = urllib.urlopen(URL).read()
-soup = BeautifulSoup(r)
+
+r = urllib.request.urlopen(URL).read()
+soup = BeautifulSoup(r, features="html.parser")
 
 episodes = soup.findAll("p")
 
@@ -20,13 +23,13 @@ episode_num = 0
 for episode in episodes:
     # get the URLs for each episode script and open that page
     episode_url = BASE_URL + episode.a['href']
-    episode_page = urllib.urlopen(episode_url).read()
+    episode_page = urllib.request.urlopen(episode_url).read()
     episode_soup = BeautifulSoup(episode_page)
 
     # get link to script text and extract text
     script_details = episode_soup.findAll("table", class_="script-details")
     script_url = BASE_URL + script_details[0].findAll("a")[-1]["href"]
-    script_page = urllib.urlopen(script_url).read()
+    script_page = urllib.request.urlopen(script_url).read()
     script_soup = BeautifulSoup(script_page)
     script = (script_soup
               .findAll("td", class_="scrtext")[0]
