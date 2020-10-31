@@ -5,6 +5,8 @@ from csv import DictReader
 
 #firstScript = ourCSV["text"]
 
+counter = 0
+
 with open('seinfeld_scripts.csv', 'r') as read_obj:
     csv_dict_reader = DictReader(read_obj)
 
@@ -79,5 +81,11 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
             cleanedScript = cleanedScript + " " + tempWord
 
         print(cleanedScript)
+        print("------------------------------------------------------------------")
+
+        counter += 1
+
+        if counter >= 3:
+            break
                 
-        break
+        #break
