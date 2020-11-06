@@ -81,9 +81,9 @@ for episode in episodes:
     all_episodes['episode_num'].append(episode_num)
     all_episodes['title'].append(title)
     all_episodes['air_date'].append(date)
-    all_episodes['text'].append(script)
+    all_episodes['text'].append(cleanedScript)
 
     print("Episode " + str(episode_num) + "/176")
 
-seinfeld_df = pd.DataFrame(all_episodes)
-seinfeld_df.to_csv('seinfeld_scripts.csv', index_lable='episode_num')
+# seinfeld_df = pd.DataFrame(all_episodes)
+# seinfeld_df.to_csv('seinfeld_scripts.csv', index_lable='episode_num')
