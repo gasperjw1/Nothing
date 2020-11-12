@@ -1,11 +1,18 @@
 import pandas as pd
+import csv
 from csv import DictReader
+import sys
 
 #ourCSV = pd.read_csv('seinfeld_scripts.csv')
 
 #firstScript = ourCSV["text"]
 
 counter = 0
+
+episodeNumList = []
+scriptList = []
+
+csv.field_size_limit(100000000)
 
 with open('seinfeld_scripts.csv', 'r') as read_obj:
     csv_dict_reader = DictReader(read_obj)
@@ -80,12 +87,20 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
 
             cleanedScript = cleanedScript + " " + tempWord
 
-        print(cleanedScript)
-        print("------------------------------------------------------------------")
+        #print(cleanedScript)
+        #print("------------------------------------------------------------------")
 
         counter += 1
 
-        if counter >= 3:
-            break
+        episodeNumList.append(counter)
+        scriptList.append(cleanedScript)
+
+        #if counter >= 170:
+        #    break
                 
         #break
+    
+    df = pd.DataFrame({
+        'Episode Number': episodeNumList,
+        'Script': scriptList})
+    df.to_csv('out.csv', index=False)
