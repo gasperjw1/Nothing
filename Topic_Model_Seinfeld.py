@@ -260,6 +260,9 @@ with open('bunchOfScripts.csv', 'r') as read_obj:
 
         filesForCorpus.append(t)
 
+        if counter >= 100:
+            break
+
 # with open('bunchOfScripts.csv') as manyAScript:
 #     for aScript in manyAScript:
 #         tks = setUp(aScript)
@@ -281,6 +284,7 @@ AMT_OF_WORDS = 10
 
 from gensim import corpora
 dict = corpora.Dictionary(filesForCorpus)
+dict.filter_extremes(no_below=40, no_above=0.5, keep_n=1500)
 corp = [dict.doc2bow(script) for script in filesForCorpus]
 
 import pickle
@@ -288,7 +292,9 @@ pickle.dump(corp, open('corpus.pkl', 'wb'))
 dict.save('dictionary.gensim')
 
 import gensim
-ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = AMT_OF_TOPICS, id2word = dict, passes = 15)
+#from gensim.models import LdaMulticore
+ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = AMT_OF_TOPICS, id2word = dict, passes = 2)
+#ldamodel = LdaMulticore(corp, id2word=dict, passes=2, workers=2, num_topics= AMT_OF_TOPICS)
 ldamodel.save('model20.gensim')
 
 ##############################################################
@@ -321,7 +327,7 @@ for seinScript in scriptInfo:
 	epNum += 1
 
 	for i in range(AMT_OF_TOPICS):
-		temp = listOfRelTopics[i][1]
+		temp = listOfRelTopics[i] #[1]
 
 		totalPercTopics[i] += temp
 		percPerEpisode[i].append(temp)
