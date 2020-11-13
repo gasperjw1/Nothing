@@ -204,6 +204,9 @@ with open('bunchOfScripts.csv') as manyAScript:
 ##############################################################
 ##############################################################
 
+AMT_OF_TOPICS = 10
+AMT_OF_WORDS = 10
+
 from gensim import corpora
 dict = corpora.Dictionary(filesForCorpus)
 corp = [dict.doc2bow(script) for script in filesForCorpus]
@@ -213,7 +216,7 @@ pickle.dump(corp, open('corpus.pkl', 'wb'))
 dict.save('dictionary.gensim')
 
 import gensim
-ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = 10, id2word = dict, passes = 15)
+ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = AMT_OF_TOPICS, id2word = dict, passes = 15)
 ldamodel.save('model20.gensim')
 
 ##############################################################
@@ -222,7 +225,7 @@ ldamodel.save('model20.gensim')
 ##############################################################
 ##############################################################
 
-topics = ldamodel.print_topics(num_words=10)
+topics = ldamodel.print_topics(num_words = AMT_OF_WORDS)
 for topic in topics:
     print(topic)
 
@@ -234,7 +237,7 @@ percPerEpisode = []
 mostRelTopicList = []
 
 #range is total number of topics. We initializing both arrays.
-for i in range(10):
+for i in range(AMT_OF_TOPICS):
 	totalPercTopics.append(0.0)
 	percPerEpisode.append([])
 
@@ -245,7 +248,7 @@ for seinScript in scriptInfo:
 
 	epNum += 1
 
-	for i in range(10):
+	for i in range(AMT_OF_TOPICS):
 		temp = listOfRelTopics[i][1]
 
 		totalPercTopics[i] += temp
@@ -259,12 +262,13 @@ for seinScript in scriptInfo:
 	mostRelTopic = 0
 	relTopicPerc = 0.0
 
-for i in range(10):
+for i in range(AMT_OF_TOPICS):
 	totalPercTopics[i] /= epNum
 
 print('The average topic relation: ')
 print(totalPercTopics)
 
+#Needs to be updated when AMT_OF_TOPICS is changed
 df = pd.DataFrame({
 	'Episode Number': episodeNumList,
 	'Script': scriptList,
