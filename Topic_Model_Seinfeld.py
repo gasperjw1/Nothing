@@ -38,7 +38,7 @@ nltk.download('stopwords')
 stopWords = set(nltk.corpus.stopwords.words('english'))
 
 def setUp(script):
-    names = ['jerry', 'kramer', 'george', 'elaine', 'larry', 'david', 'newman', 'pensky']
+    #names = ['jerry', 'kramer', 'george', 'elaine', 'larry', 'david', 'newman', 'pensky']
     tokens = tokenize(script)
     tokens = [tk for tk in tokens if len(tk) > 4]
     tokens = [tk for tk in tokens if tk not in stopWords]
