@@ -38,9 +38,11 @@ nltk.download('stopwords')
 stopWords = set(nltk.corpus.stopwords.words('english'))
 
 def setUp(script):
+    names = ['jerry', 'kramer', 'george', 'elaine', 'larry', 'david', 'newman', 'pensky']
     tokens = tokenize(script)
     tokens = [tk for tk in tokens if len(tk) > 4]
     tokens = [tk for tk in tokens if tk not in stopWords]
+    tokens = [tk for tk in tokens if tk not in names]
     tokens = [getLemma(tk) for tk in tokens]
 
     return tokens
@@ -169,5 +171,34 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
     
     # df = pd.DataFrame({
     #     'Episode Number': episodeNumList,
-    #     'Script': scriptList})
+    #     'Script': scriptList,
+    #     'Tokens': scriptInfo})
     # df.to_csv('out2.csv', index=False)
+
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+
+from gensim import corpora
+dict = corpora.Dictionary(scriptInfo)
+corp = [dict.doc2bow(script) for script in scriptInfo]
+
+import pickle
+pickle.dump(corp, open('corpus.pkl', 'wb'))
+dict.save('dictionary.gensim')
+
+import gensim
+ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = 10, id2word = dict, passes = 15)
+ldamodel.save('model10.gensim')
+
+topics = ldamodel.print_topics(num_words=4)
+for topic in topics:
+    print(topic)
+
