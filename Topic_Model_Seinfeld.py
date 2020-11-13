@@ -260,7 +260,7 @@ with open('bunchOfScripts.csv', 'r') as read_obj:
 
         filesForCorpus.append(t)
 
-        if counter >= 100:
+        if counter >= 300:
             break
 
 # with open('bunchOfScripts.csv') as manyAScript:
@@ -293,9 +293,9 @@ dict.save('dictionary.gensim')
 
 import gensim
 #from gensim.models import LdaMulticore
-ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = AMT_OF_TOPICS, id2word = dict, passes = 2)
+ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = 10, id2word = dict, passes = 2)
 #ldamodel = LdaMulticore(corp, id2word=dict, passes=2, workers=2, num_topics= AMT_OF_TOPICS)
-ldamodel.save('model20.gensim')
+ldamodel.save('model10.gensim')
 
 ##############################################################
 ##############################################################
@@ -303,19 +303,20 @@ ldamodel.save('model20.gensim')
 ##############################################################
 ##############################################################
 
-topics = ldamodel.print_topics(num_words = AMT_OF_WORDS)
+topics = ldamodel.print_topics(num_words = 10)
 for topic in topics:
     print(topic)
 
 epNum = 0
 mostRelTopic = 0
 relTopicPerc = 0.0
+temp = 0.0
 totalPercTopics = []
 percPerEpisode = []
 mostRelTopicList = []
 
 #range is total number of topics. We initializing both arrays.
-for i in range(AMT_OF_TOPICS):
+for i in range(10):
 	totalPercTopics.append(0.0)
 	percPerEpisode.append([])
 
@@ -326,22 +327,22 @@ for seinScript in scriptInfo:
 
 	epNum += 1
 
-	for i in range(AMT_OF_TOPICS):
-		temp = listOfRelTopics[i] #[1]
+	# for i in listOfRelTopics:
+	# 	totalPercTopics[i[0]] += i[1]
+	# 	percPerEpisode[i[0]].append(i[1])
 
-		totalPercTopics[i] += temp
-		percPerEpisode[i].append(temp)
-
-		if temp > relTopicPerc:
-			mostRelTopic = i
-			relTopicPerc = temp
+	# 	if temp > relTopicPerc:
+	# 		mostRelTopic = i[0]
+	# 		relTopicPerc = i[1]
+        
 
 	mostRelTopicList.append(mostRelTopic)
 	mostRelTopic = 0
 	relTopicPerc = 0.0
 
 for i in range(AMT_OF_TOPICS):
-	totalPercTopics[i] /= epNum
+    t = True
+    totalPercTopics[i] /= epNum
 
 print('The average topic relation: ')
 print(totalPercTopics)
