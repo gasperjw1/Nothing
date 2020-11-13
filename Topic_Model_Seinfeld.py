@@ -42,7 +42,7 @@ def setUp(script):
     tokens = tokenize(script)
     tokens = [tk for tk in tokens if len(tk) > 4]
     tokens = [tk for tk in tokens if tk not in stopWords]
-    tokens = [tk for tk in tokens if tk not in names]
+    #tokens = [tk for tk in tokens if tk not in names]
     tokens = [getLemma(tk) for tk in tokens]
 
     return tokens
@@ -186,9 +186,27 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
 ##############################################################
 ##############################################################
 
+filesForCorpus = []
+
+with open('bunchOfScripts.csv') as manyAScript:
+    for aScript in manyAScript:
+        tks = setUp(aScript)
+        filesForCorpus.append(tks)
+
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+
 from gensim import corpora
-dict = corpora.Dictionary(scriptInfo)
-corp = [dict.doc2bow(script) for script in scriptInfo]
+dict = corpora.Dictionary(filesForCorpus)
+corp = [dict.doc2bow(script) for script in filesForCorpus]
 
 import pickle
 pickle.dump(corp, open('corpus.pkl', 'wb'))
@@ -196,9 +214,77 @@ dict.save('dictionary.gensim')
 
 import gensim
 ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = 10, id2word = dict, passes = 15)
-ldamodel.save('model10.gensim')
+ldamodel.save('model20.gensim')
 
-topics = ldamodel.print_topics(num_words=4)
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+
+topics = ldamodel.print_topics(num_words=10)
 for topic in topics:
     print(topic)
 
+epNum = 0
+mostRelTopic = 0
+relTopicPerc = 0.0
+totalPercTopics = []
+percPerEpisode = []
+mostRelTopicList = []
+
+#range is total number of topics. We initializing both arrays.
+for i in range(10):
+	totalPercTopics.append(0.0)
+	percPerEpisode.append([])
+
+
+for seinScript in scriptInfo:
+	seinScript_bow = dict.doc2bow(seinScript)
+	listOfRelTopics = ldamodel.get_document_topics(seinScript_bow)
+
+	epNum += 1
+
+	for i in range(10):
+		temp = listOfRelTopics[i][1]
+
+		totalPercTopics[i] += temp
+		percPerEpisode[i].append(temp)
+
+		if temp > relTopicPerc:
+			mostRelTopic = i
+			relTopicPerc = temp
+
+	mostRelTopicList.append(mostRelTopic)
+	mostRelTopic = 0
+	relTopicPerc = 0.0
+
+for i in range(10):
+	totalPercTopics[i] /= epNum
+
+print('The average topic relation: ')
+print(totalPercTopics)
+
+df = pd.DataFrame({
+	'Episode Number': episodeNumList,
+	'Script': scriptList,
+	'Main Topic': mostRelTopicList,
+	'Topic 1 Relevance': percPerEpisode[0],
+	'Topic 2 Relevance': percPerEpisode[1],
+	'Topic 3 Relevance': percPerEpisode[2],
+	'Topic 4 Relevance': percPerEpisode[3],
+	'Topic 5 Relevance': percPerEpisode[4],
+	'Topic 6 Relevance': percPerEpisode[5],
+	'Topic 7 Relevance': percPerEpisode[6],
+	'Topic 8 Relevance': percPerEpisode[7],
+	'Topic 9 Relevance': percPerEpisode[8],
+	'Topic 10 Relevance': percPerEpisode[9]})
+
+df.to_csv('SeinfeldTopicModel.csv', index=False)
+
+
+# df2 = pd.DataFrame({
+#	'Number': [1,2,3,4,5,6,7,8,9,10],
+#	'Topic': topics})
+#
+# df2.to_csv('ListOfTopics.csv', index=False)
