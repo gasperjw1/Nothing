@@ -1,20 +1,47 @@
 from nltk.corpus.reader.wordnet import Lemma
+from nltk.tokenize import word_tokenize
+from nltk.tag import pos_tag
 import spacy
 spacy.load("en_core_web_sm")
 from spacy.lang.en import English
 parser = English()
 
+import pandas as pd
+import csv
+from csv import DictReader
+import sys
+
+names = []
+
+with open('namesFL.csv') as allNames:
+    for aName in allNames:
+        names.append(aName)
+    
+    print('Done with names')
+
 def tokenize(script):
+    #listOfTokensFirst = parser(script)
     listOfTokens = parser(script)
     ldaT = []
+    #place = 0
+
+    # for tk in listOfTokensFirst.ents:
+    #     if tk.label_ == 'PERSON':
+    #         print(tk)
+    #         print(listOfTokens[place])
+    #         listOfTokens[place] = 'PERSON'
+    #     place += 1
 
     for tk in listOfTokens:
+        #print(tk)
         if tk.orth_.isspace():
             continue
         elif tk.like_url:
             ldaT.append('URL')
         elif tk.orth_.startswith('@'):
             ldaT.append('SCREEN_NAME')
+        # elif tk.ent_type_ == 'PERSON':
+        #     tk.append('PERSON')
         else:
             ldaT.append(tk.lower_)
     
@@ -42,7 +69,7 @@ def setUp(script):
     tokens = tokenize(script)
     tokens = [tk for tk in tokens if len(tk) > 4]
     tokens = [tk for tk in tokens if tk not in stopWords]
-    #tokens = [tk for tk in tokens if tk not in names]
+    tokens = [tk for tk in tokens if tk not in names]
     tokens = [getLemma(tk) for tk in tokens]
 
     return tokens
@@ -59,10 +86,10 @@ def setUp(script):
 ##############################################################
 ##############################################################
 
-import pandas as pd
-import csv
-from csv import DictReader
-import sys
+# import pandas as pd
+# import csv
+# from csv import DictReader
+# import sys
 
 #ourCSV = pd.read_csv('seinfeld_scripts.csv')
 
@@ -134,7 +161,7 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
 
         for word in script3.split(' '):
             #print(word)
-            if len(word) > 0 and "\n" not in word:
+            if len(word) > 0:# and "\n" not in word:
                 script4 = script4 + " " + word
 
         #print(script4)
@@ -164,10 +191,12 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
 
         scriptInfo.append(t)
 
-        #if counter >= 170:
+        # if counter >= 50:
         #    break
                 
         #break
+    
+    print('Done with Seinfeld Scripts')
     
     # df = pd.DataFrame({
     #     'Episode Number': episodeNumList,
@@ -235,7 +264,7 @@ with open('bunchOfScripts.csv', 'r') as read_obj:
 
         for word in script3.split(' '):
             #print(word)
-            if len(word) > 0 and "\n" not in word:
+            if len(word) > 0:# and "\n" not in word:
                 script4 = script4 + " " + word
 
 
@@ -260,8 +289,10 @@ with open('bunchOfScripts.csv', 'r') as read_obj:
 
         filesForCorpus.append(t)
 
-        if counter >= 300:
-            break
+        # if counter >= 300:
+        #     break
+
+    print('Done with Film Scripts')
 
 # with open('bunchOfScripts.csv') as manyAScript:
 #     for aScript in manyAScript:
@@ -284,7 +315,7 @@ AMT_OF_WORDS = 10
 
 from gensim import corpora
 dict = corpora.Dictionary(filesForCorpus)
-dict.filter_extremes(no_below=40, no_above=0.5, keep_n=1500)
+dict.filter_extremes(no_below=60, no_above=0.5)
 corp = [dict.doc2bow(script) for script in filesForCorpus]
 
 import pickle
@@ -294,7 +325,7 @@ dict.save('dictionary.gensim')
 import gensim
 #from gensim.models import LdaMulticore
 ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = 10, id2word = dict, passes = 2)
-#ldamodel = LdaMulticore(corp, id2word=dict, passes=2, workers=2, num_topics= AMT_OF_TOPICS)
+#ldamodel = LdaMulticore(corp, num_topics= AMT_OF_TOPICS, id2word=dict, passes=2)
 ldamodel.save('model10.gensim')
 
 ##############################################################
@@ -310,7 +341,6 @@ for topic in topics:
 epNum = 0
 mostRelTopic = 0
 relTopicPerc = 0.0
-temp = 0.0
 totalPercTopics = []
 percPerEpisode = []
 mostRelTopicList = []
@@ -322,30 +352,59 @@ for i in range(10):
 
 
 for seinScript in scriptInfo:
-	seinScript_bow = dict.doc2bow(seinScript)
-	listOfRelTopics = ldamodel.get_document_topics(seinScript_bow)
-
-	epNum += 1
+    seinScript_bow = dict.doc2bow(seinScript)
+    listOfRelTopics = ldamodel.get_document_topics(seinScript_bow)
+    #print(listOfRelTopics)
+    epNum += 1
+    checkbox = 0
 
 	# for i in listOfRelTopics:
 	# 	totalPercTopics[i[0]] += i[1]
 	# 	percPerEpisode[i[0]].append(i[1])
-
 	# 	if temp > relTopicPerc:
-	# 		mostRelTopic = i[0]
-	# 		relTopicPerc = i[1]
+# 		mostRelTopic = i[0]
+# 		relTopicPerc = i[1]
+
+    for i in range(10):
+        if len(listOfRelTopics) > checkbox:
+            temp = listOfRelTopics[checkbox]
+            if temp[0] == i:
+                totalPercTopics[i] += temp[1]
+                percPerEpisode[i].append(temp[1])
+                if temp[1] > relTopicPerc:
+                    mostRelTopic = i
+                    relTopicPerc = temp[1]
+                checkbox += 1
+            else:
+                percPerEpisode[i].append(0.0)
+        else:
+            percPerEpisode[i].append(0.0)
+            #totalPercTopics[i] = 0.1
         
 
-	mostRelTopicList.append(mostRelTopic)
-	mostRelTopic = 0
-	relTopicPerc = 0.0
+    mostRelTopicList.append(mostRelTopic)
+    mostRelTopic = 0
+    relTopicPerc = 0.0
 
 for i in range(AMT_OF_TOPICS):
-    t = True
     totalPercTopics[i] /= epNum
 
 print('The average topic relation: ')
 print(totalPercTopics)
+
+# print(len(episodeNumList))
+# print(len(scriptList))
+# print(len(mostRelTopicList))
+# print(len(percPerEpisode[0]))
+# print(len(percPerEpisode[1]))
+# print(len(percPerEpisode[2]))
+# print(len(percPerEpisode[3]))
+# print(len(percPerEpisode[4]))
+# print(len(percPerEpisode[5]))
+# print(len(percPerEpisode[6]))
+# print(len(percPerEpisode[7]))
+# print(len(percPerEpisode[8]))
+# print(len(percPerEpisode[9]))
 
 #Needs to be updated when AMT_OF_TOPICS is changed
 df = pd.DataFrame({
@@ -364,6 +423,12 @@ df = pd.DataFrame({
 	'Topic 10 Relevance': percPerEpisode[9]})
 
 df.to_csv('SeinfeldTopicModel.csv', index=False)
+
+df2 = pd.DataFrame({
+    'Topics': topics,
+    'Average Relevance': totalPercTopics})
+
+df2.to_csv('SeinfeldTopicAverage.csv', index=False)
 
 
 # df2 = pd.DataFrame({
