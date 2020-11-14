@@ -391,10 +391,10 @@ for seinScript in scriptInfo:
                     relTopicPerc = temp[1]
                 checkbox += 1
             else:
-                percPerEpisode[i].append(0.0)
+                percPerEpisode[i].append(0.002)
         else:
-            percPerEpisode[i].append(0.0)
-            #totalPercTopics[i] = 0.1
+            percPerEpisode[i].append(0.002)
+            totalPercTopics[i] += 0.002
         
 
     mostRelTopicList.append(mostRelTopic)
