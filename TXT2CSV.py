@@ -3,9 +3,9 @@ import csv
 
 
 #'path_of_directory'
-dirpath = './setOfScripts' 
+dirpath = './Comedy' 
 
-output = 'bunchOfScripts.csv'
+output = 'comedyScripts.csv'
 
 with open(output, 'w') as outfile:
     csvout = csv.writer(outfile)

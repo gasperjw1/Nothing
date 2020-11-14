@@ -232,7 +232,8 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
 filesForCorpus = []
 counter  = 0
 
-with open('bunchOfScripts.csv', 'r') as read_obj:
+#with open('bunchOfScripts.csv', 'r') as read_obj:
+with open('comedyScripts.csv', 'r') as read_obj:
     csv_dict_reader = DictReader(read_obj)
 
     for row in csv_dict_reader:
