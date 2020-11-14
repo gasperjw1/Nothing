@@ -13,9 +13,23 @@ import sys
 
 names = []
 
-with open('namesFL.csv') as allNames:
-    for aName in allNames:
-        names.append(aName)
+with open('fn_boys.csv') as allNames:
+    name_dict = DictReader(allNames)
+
+    for row in name_dict:
+        names.append(row['FirstForename'].lower())
+    
+    print(len(names))
+    
+    print('Done with names')
+
+with open('fn_girls.csv') as allNames:
+    name_dict = DictReader(allNames)
+
+    for row in name_dict:
+        names.append(row['FirstForename'].lower())
+    
+    print(len(names))
     
     print('Done with names')
 
