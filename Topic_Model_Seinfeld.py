@@ -110,11 +110,18 @@ stopWords = set(nltk.corpus.stopwords.words('english'))
 ##############################################################
 ##############################################################
 
+from nltk import word_tokenize, pos_tag
+nltk.download('averaged_perceptron_tagger')
+
 def setUp(script):
+
+    is_noun_adj = lambda pos: pos[:2] == 'NN' or pos[:2] == 'JJ'
+
     tokens = tokenize(script)
     tokens = [tk for tk in tokens if len(tk) > 4]
     tokens = [tk for tk in tokens if tk not in stopWords]
-    tokens = [tk for tk in tokens if tk not in names]
+    tokens = [tk for tk in tokens if tk not in names and tk != 'fuckin']
+    tokens = [tk for (tk, pos) in pos_tag(tokens) if is_noun_adj(pos)]
     tokens = [getLemma(tk) for tk in tokens]
 
     return tokens
