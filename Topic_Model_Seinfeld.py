@@ -327,7 +327,7 @@ dict.save('dictionary.gensim')
 
 import gensim
 ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = 10, id2word = dict, passes = 2)
-mod = 'model' + AMT_OF_TOPICS + '.gensim'
+mod = 'model' + str(AMT_OF_TOPICS) + '.gensim'
 ldamodel.save(mod)
 
 ##############################################################
