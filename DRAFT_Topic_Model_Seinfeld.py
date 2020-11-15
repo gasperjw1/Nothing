@@ -11,23 +11,6 @@ import csv
 from csv import DictReader
 import sys
 
-##############################################################
-##############################################################
-##############################################################
-##############################################################
-# Part 1
-##############################################################
-##############################################################
-##############################################################
-##############################################################
-
-##############################################################
-##############################################################
-# Creates a list of first names to be used later when removing
-# unneccesary information
-##############################################################
-##############################################################
-
 names = []
 
 with open('fn_boys.csv') as allNames:
@@ -50,15 +33,18 @@ with open('fn_girls.csv') as allNames:
     
     print('Done with names')
 
-##############################################################
-##############################################################
-# Tokenizes a given script
-##############################################################
-##############################################################
-
 def tokenize(script):
+    #listOfTokensFirst = parser(script)
     listOfTokens = parser(script)
     ldaT = []
+    #place = 0
+
+    # for tk in listOfTokensFirst.ents:
+    #     if tk.label_ == 'PERSON':
+    #         print(tk)
+    #         print(listOfTokens[place])
+    #         listOfTokens[place] = 'PERSON'
+    #     place += 1
 
     for tk in listOfTokens:
         #print(tk)
@@ -68,16 +54,12 @@ def tokenize(script):
             ldaT.append('URL')
         elif tk.orth_.startswith('@'):
             ldaT.append('SCREEN_NAME')
+        # elif tk.ent_type_ == 'PERSON':
+        #     tk.append('PERSON')
         else:
             ldaT.append(tk.lower_)
     
     return ldaT
-
-##############################################################
-##############################################################
-# Lemmatizes a given word
-##############################################################
-##############################################################
 
 import nltk
 nltk.download('wordnet')
@@ -93,24 +75,11 @@ from nltk.stem.wordnet import WordNetLemmatizer
 def getLemma2(word):
     return WordNetLemmatizer().lemmatize(word)
 
-##############################################################
-##############################################################
-# Makes a list of stop words to be used for cleaning a given
-# script
-##############################################################
-##############################################################
-
 nltk.download('stopwords')
 stopWords = set(nltk.corpus.stopwords.words('english'))
 
-##############################################################
-##############################################################
-# This function sets up the script to be analyzed by the LDA
-# model
-##############################################################
-##############################################################
-
 def setUp(script):
+    #names = ['jerry', 'kramer', 'george', 'elaine', 'larry', 'david', 'newman', 'pensky']
     tokens = tokenize(script)
     tokens = [tk for tk in tokens if len(tk) > 4]
     tokens = [tk for tk in tokens if tk not in stopWords]
@@ -124,20 +93,21 @@ def setUp(script):
 ##############################################################
 ##############################################################
 ##############################################################
-# Part 2
+##############################################################
+##############################################################
 ##############################################################
 ##############################################################
 ##############################################################
 ##############################################################
 
-##############################################################
-##############################################################
-# Reads the seinfeld scripts and does an initial clean of each
-# episode then calls setUp to set up the script for analyzing.
-# We then create a csv file storing each episode and it's
-# now cleaned script.
-##############################################################
-##############################################################
+# import pandas as pd
+# import csv
+# from csv import DictReader
+# import sys
+
+#ourCSV = pd.read_csv('seinfeld_scripts.csv')
+
+#firstScript = ourCSV["text"]
 
 counter = 0
 
@@ -151,6 +121,8 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
     csv_dict_reader = DictReader(read_obj)
 
     for row in csv_dict_reader:
+        #print(row['text'])
+
         stop = False
         script2 = ""
         script3 = ""
@@ -160,7 +132,16 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
         counterEnds = 0
         cleanedScript = ""
 
+        #print(row['text'])
+
         for word in row['text'].split(' '):
+            #print(word)
+            #if "</b>" in word:
+            #    print(word)
+            #    counterEnds  = counterEnds + 1
+            #if counterEnds >= 3:
+            #    script2 = script2 + " " + word
+
             if "<" not in word:
                 script2 = script2 + ' ' + word
         
@@ -179,6 +160,18 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
         #print(script3)
         
         stop = False
+
+        #for word in script3:
+        #    if word == "<b>":
+        #        stop = True
+            
+        #    if not stop:
+        #        cleanedScript = cleanedScript + " " + word
+
+        #    if word == "<\\b>":
+        #        stop = False
+
+        #cleanedScript.replace("<b><\\b>","")
 
         for word in script3.split(' '):
             #print(word)
@@ -207,22 +200,32 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
 
         t = setUp(cleanedScript)
 
+        # if counter % 20 == 0:
+        #     print(t)
+
         scriptInfo.append(t)
 
         # if counter >= 50:
         #    break
+                
+        #break
     
     print('Done with Seinfeld Scripts')
     
-    df = pd.DataFrame({
-        'Episode Number': episodeNumList,
-        'Script': scriptList})
-    df.to_csv('cleanedSeinfeldScripts.csv', index=False)
+    # df = pd.DataFrame({
+    #     'Episode Number': episodeNumList,
+    #     'Script': scriptList,
+    #     'Tokens': scriptInfo})
+    # df.to_csv('out2.csv', index=False)
 
 ##############################################################
 ##############################################################
-# Reads the film scripts and does an initial clean of each
-# movie then calls setUp to set up the script for analyzing.
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+##############################################################
 ##############################################################
 ##############################################################
 
@@ -234,6 +237,8 @@ with open('comedyScripts.csv', 'r') as read_obj:
     csv_dict_reader = DictReader(read_obj)
 
     for row in csv_dict_reader:
+        #print(row['text'])
+
         stop = False
         script2 = ""
         script3 = ""
@@ -243,7 +248,16 @@ with open('comedyScripts.csv', 'r') as read_obj:
         counterEnds = 0
         cleanedScript = ""
 
+        #print(row['text'])
+
         for word in row['Content'].split(' '):
+            #print(word)
+            #if "</b>" in word:
+            #    print(word)
+            #    counterEnds  = counterEnds + 1
+            #if counterEnds >= 3:
+            #    script2 = script2 + " " + word
+
             if "<" not in word:
                 script2 = script2 + ' ' + word
         
@@ -281,6 +295,9 @@ with open('comedyScripts.csv', 'r') as read_obj:
 
         counter += 1
 
+        # episodeNumList.append(counter)
+        # scriptList.append(cleanedScript)
+
         t = setUp(cleanedScript)
 
         print(counter)
@@ -301,15 +318,10 @@ with open('comedyScripts.csv', 'r') as read_obj:
 ##############################################################
 ##############################################################
 ##############################################################
-# Part 3
 ##############################################################
 ##############################################################
 ##############################################################
 ##############################################################
-
-##############################################################
-##############################################################
-# Creates a corpus and a dictionary using the film scripts
 ##############################################################
 ##############################################################
 
@@ -318,7 +330,7 @@ AMT_OF_WORDS = 10
 
 from gensim import corpora
 dict = corpora.Dictionary(filesForCorpus)
-dict.filter_extremes(no_below=40, no_above=0.75)
+dict.filter_extremes(no_below=60, no_above=0.5)
 corp = [dict.doc2bow(script) for script in filesForCorpus]
 
 import pickle
@@ -326,30 +338,27 @@ pickle.dump(corp, open('corpus.pkl', 'wb'))
 dict.save('dictionary.gensim')
 
 import gensim
+#from gensim.models import LdaMulticore
 ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = 10, id2word = dict, passes = 2)
-mod = 'model' + AMT_OF_TOPICS + '.gensim'
-ldamodel.save(mod)
+#ldamodel = LdaMulticore(corp, num_topics= AMT_OF_TOPICS, id2word=dict, passes=2)
+ldamodel.save('model10.gensim')
 
 ##############################################################
 ##############################################################
-# Here we take the Seinfeld scripts and analyze them using the
-# LDA Model we created, finding the percentage of relevance
-# between each script and the topics deduced from the corpus.
-# We then use this information to create an overall topic
-# model for the entire show.
+##############################################################
 ##############################################################
 ##############################################################
 
-topics = ldamodel.print_topics(num_words = AMT_OF_WORDS)
+topics = ldamodel.print_topics(num_words = 10)
 for topic in topics:
     print(topic)
 
-epNum = 0 #to keep track of the amount of episodes
-mostRelTopic = 0 #middle-man type variable
-relTopicPerc = 0.0 #middle-man type vairable
-totalPercTopics = [] #to store the average relevance of each topic in comparison to the entire show
-percPerEpisode = [] #to store the average relevance of each topic in comparison to the each episode
-mostRelTopicList = [] #to store the most relevant each topic in comparison to the each episode
+epNum = 0
+mostRelTopic = 0
+relTopicPerc = 0.0
+totalPercTopics = []
+percPerEpisode = []
+mostRelTopicList = []
 
 #range is total number of topics. We initializing both arrays.
 for i in range(10):
@@ -358,14 +367,19 @@ for i in range(10):
 
 
 for seinScript in scriptInfo:
-
-    #runs the LDA Model on the given episode
     seinScript_bow = dict.doc2bow(seinScript)
     listOfRelTopics = ldamodel.get_document_topics(seinScript_bow)
+    #print(listOfRelTopics)
     epNum += 1
     checkbox = 0
 
-    #updates the lists with the information from the given episode
+	# for i in listOfRelTopics:
+	# 	totalPercTopics[i[0]] += i[1]
+	# 	percPerEpisode[i[0]].append(i[1])
+	# 	if temp > relTopicPerc:
+# 		mostRelTopic = i[0]
+# 		relTopicPerc = i[1]
+
     for i in range(10):
         if len(listOfRelTopics) > checkbox:
             temp = listOfRelTopics[checkbox]
@@ -390,15 +404,22 @@ for seinScript in scriptInfo:
 for i in range(AMT_OF_TOPICS):
     totalPercTopics[i] /= epNum
 
-##############################################################
-##############################################################
-# Makes a csv file to store the information of each episode
-# and the overall statistics of the show.
-##############################################################
-##############################################################
-
 print('The average topic relation: ')
 print(totalPercTopics)
+
+# print(len(episodeNumList))
+# print(len(scriptList))
+# print(len(mostRelTopicList))
+# print(len(percPerEpisode[0]))
+# print(len(percPerEpisode[1]))
+# print(len(percPerEpisode[2]))
+# print(len(percPerEpisode[3]))
+# print(len(percPerEpisode[4]))
+# print(len(percPerEpisode[5]))
+# print(len(percPerEpisode[6]))
+# print(len(percPerEpisode[7]))
+# print(len(percPerEpisode[8]))
+# print(len(percPerEpisode[9]))
 
 #Needs to be updated when AMT_OF_TOPICS is changed
 df = pd.DataFrame({
@@ -423,3 +444,10 @@ df2 = pd.DataFrame({
     'Average Relevance': totalPercTopics})
 
 df2.to_csv('SeinfeldTopicAverage.csv', index=False)
+
+
+# df2 = pd.DataFrame({
+#	'Number': [1,2,3,4,5,6,7,8,9,10],
+#	'Topic': topics})
+#
+# df2.to_csv('ListOfTopics.csv', index=False)
