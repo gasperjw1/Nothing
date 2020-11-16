@@ -235,6 +235,7 @@ with open('./initialInformation/seinfeld_scripts.csv', 'r') as read_obj:
 
 filesForCorpus = []
 movieNames = []
+movieScripts = []
 counter  = 0
 
 #with open('bunchOfScripts.csv', 'r') as read_obj:
@@ -298,6 +299,8 @@ with open('./initialInformation/comedyScripts.csv', 'r') as read_obj:
 
         filesForCorpus.append(t)
 
+        movieScripts.append(cleanedScript)
+
         # if counter >= 300:
         #     break
 
@@ -305,7 +308,7 @@ with open('./initialInformation/comedyScripts.csv', 'r') as read_obj:
 
     df = pd.DataFrame({
         'Movie Name': movieNames,
-        'Script': scriptList})
+        'Script': movieScripts})
     df.to_csv('results/cleanedMovieScripts.csv', index=False)
 
 # with open('bunchOfScripts.csv') as manyAScript:
