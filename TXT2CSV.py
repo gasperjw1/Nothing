@@ -3,39 +3,40 @@ import csv
 
 
 #'path_of_directory'
-dirpath = './Comedy' 
+dirpath = './initialInformation/Comedy' 
 
-output = 'comedyScripts.csv'
+output = './initialInformation/comedyScripts.csv'
 
 with open(output, 'w') as outfile:
     csvout = csv.writer(outfile)
-    csvout.writerow(['Content'])
+    csvout.writerow(['Name', 'Content'])
 
     files = os.listdir(dirpath)
 
     for filename in files:
         with open(dirpath + '/' + filename) as afile:
-            csvout.writerow([afile.read()])
+            endOfTitle = filename.find('_')
+            csvout.writerow([filename[0:endOfTitle], afile.read()])
             afile.close()
 
     outfile.close()
 
-#'path_of_directory'
-dirpath = './names' 
+# #'path_of_directory'
+# dirpath = './initialInformation' 
 
-output = 'namesFL.csv'
+# output = './initialInformation/namesFL.csv'
 
-with open(output, 'w') as outfile:
-    csvout = csv.writer(outfile)
-    csvout.writerow(['Name'])
+# with open(output, 'w') as outfile:
+#     csvout = csv.writer(outfile)
+#     csvout.writerow(['Name'])
 
-    files = os.listdir(dirpath)
+#     files = os.listdir(dirpath)
 
-    for filename in files:
-        with open(dirpath + '/' + filename) as afile:
-            for line in (afile.read()).split('\n'):
-                if len(line) > 1 and not line.isspace() and len(line) <= 10:
-                    csvout.writerow([line])
-            afile.close()
+#     for filename in files:
+#         with open(dirpath + '/' + filename) as afile:
+#             for line in (afile.read()).split('\n'):
+#                 if len(line) > 1 and not line.isspace() and len(line) <= 10:
+#                     csvout.writerow([line])
+#             afile.close()
 
-    outfile.close()
+#     outfile.close()

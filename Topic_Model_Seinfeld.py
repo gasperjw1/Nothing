@@ -30,7 +30,7 @@ import sys
 
 names = []
 
-with open('fn_boys.csv') as allNames:
+with open('./initialInformation/fn_boys.csv') as allNames:
     name_dict = DictReader(allNames)
 
     for row in name_dict:
@@ -40,7 +40,7 @@ with open('fn_boys.csv') as allNames:
     
     print('Done with names')
 
-with open('fn_girls.csv') as allNames:
+with open('./initialInformation/fn_girls.csv') as allNames:
     name_dict = DictReader(allNames)
 
     for row in name_dict:
@@ -154,7 +154,7 @@ scriptInfo = []
 
 csv.field_size_limit(100000000)
 
-with open('seinfeld_scripts.csv', 'r') as read_obj:
+with open('./initialInformation/seinfeld_scripts.csv', 'r') as read_obj:
     csv_dict_reader = DictReader(read_obj)
 
     for row in csv_dict_reader:
@@ -224,7 +224,7 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
     df = pd.DataFrame({
         'Episode Number': episodeNumList,
         'Script': scriptList})
-    df.to_csv('cleanedSeinfeldScripts.csv', index=False)
+    df.to_csv('results/cleanedSeinfeldScripts.csv', index=False)
 
 ##############################################################
 ##############################################################
@@ -234,10 +234,12 @@ with open('seinfeld_scripts.csv', 'r') as read_obj:
 ##############################################################
 
 filesForCorpus = []
+movieNames = []
+movieScripts = []
 counter  = 0
 
 #with open('bunchOfScripts.csv', 'r') as read_obj:
-with open('comedyScripts.csv', 'r') as read_obj:
+with open('./initialInformation/comedyScripts.csv', 'r') as read_obj:
     csv_dict_reader = DictReader(read_obj)
 
     for row in csv_dict_reader:
@@ -249,6 +251,8 @@ with open('comedyScripts.csv', 'r') as read_obj:
         script6 = ""
         counterEnds = 0
         cleanedScript = ""
+
+        movieNames.append(row['Name'])
 
         for word in row['Content'].split(' '):
             if "<" not in word:
@@ -294,10 +298,17 @@ with open('comedyScripts.csv', 'r') as read_obj:
 
         filesForCorpus.append(t)
 
+        movieScripts.append(cleanedScript)
+
         # if counter >= 300:
         #     break
 
     print('Done with Film Scripts')
+
+    df6 = pd.DataFrame({
+        'Movie Name': movieNames,
+        'Script': movieScripts})
+    df6.to_csv('results/cleanedMovieScripts.csv', index=False)
 
 # with open('bunchOfScripts.csv') as manyAScript:
 #     for aScript in manyAScript:
@@ -320,8 +331,10 @@ with open('comedyScripts.csv', 'r') as read_obj:
 ##############################################################
 ##############################################################
 
-AMT_OF_TOPICS = 10
-AMT_OF_WORDS = 10
+
+
+AMT_OF_TOPICS = int(input("How many topics? "))
+AMT_OF_WORDS = int(input("How many words per topic? "))
 
 from gensim import corpora
 dict = corpora.Dictionary(filesForCorpus)
@@ -407,26 +420,32 @@ for i in range(AMT_OF_TOPICS):
 print('The average topic relation: ')
 print(totalPercTopics)
 
-#Needs to be updated when AMT_OF_TOPICS is changed
 df = pd.DataFrame({
 	'Episode Number': episodeNumList,
-	'Script': scriptList,
-	'Main Topic': mostRelTopicList,
-	'Topic 1 Relevance': percPerEpisode[0],
-	'Topic 2 Relevance': percPerEpisode[1],
-	'Topic 3 Relevance': percPerEpisode[2],
-	'Topic 4 Relevance': percPerEpisode[3],
-	'Topic 5 Relevance': percPerEpisode[4],
-	'Topic 6 Relevance': percPerEpisode[5],
-	'Topic 7 Relevance': percPerEpisode[6],
-	'Topic 8 Relevance': percPerEpisode[7],
-	'Topic 9 Relevance': percPerEpisode[8],
-	'Topic 10 Relevance': percPerEpisode[9]})
+    # 'Script': scriptList,
+	'Main Topic': mostRelTopicList
+	# ,'Topic 1 Relevance': percPerEpisode[0],
+	# 'Topic 2 Relevance': percPerEpisode[1],
+	# 'Topic 3 Relevance': percPerEpisode[2],
+	# 'Topic 4 Relevance': percPerEpisode[3],
+	# 'Topic 5 Relevance': percPerEpisode[4],
+	# 'Topic 6 Relevance': percPerEpisode[5],
+	# 'Topic 7 Relevance': percPerEpisode[6],
+	# 'Topic 8 Relevance': percPerEpisode[7],
+	# 'Topic 9 Relevance': percPerEpisode[8],
+	# 'Topic 10 Relevance': percPerEpisode[9]
+    })
 
-df.to_csv('SeinfeldTopicModel.csv', index=False)
+topicNum = 0
+for top in percPerEpisode:
+    columnName = 'Topic ' + str(topicNum + 1) + ' Relevance'
+    df[columnName] = top
+    topicNum += 1
+ 
+df.to_csv('results/SeinfeldTopicModel.csv', index=False)
 
 df2 = pd.DataFrame({
     'Topics': topics,
     'Average Relevance': totalPercTopics})
 
-df2.to_csv('SeinfeldTopicAverage.csv', index=False)
+df2.to_csv('results/SeinfeldTopicAverage.csv', index=False)
