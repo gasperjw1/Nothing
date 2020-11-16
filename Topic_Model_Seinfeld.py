@@ -115,14 +115,14 @@ nltk.download('averaged_perceptron_tagger')
 
 def setUp(script):
 
-    is_noun_adj = lambda pos: pos[:2] == 'NN' or pos[:2] == 'JJ'
+    is_noun_adj = lambda pos: pos[:2] == 'NN'# or pos[:2] == 'JJ'
 
     tokens = tokenize(script)
     tokens = [tk for tk in tokens if len(tk) > 4]
     tokens = [tk for tk in tokens if tk not in stopWords]
     tokens = [tk for tk in tokens if tk not in names and tk != 'fuckin']
     tokens = [tk for (tk, pos) in pos_tag(tokens) if is_noun_adj(pos)]
-    tokens = [getLemma(tk) for tk in tokens]
+    tokens = [getLemma2(tk) for tk in tokens]
 
     return tokens
 
@@ -338,7 +338,7 @@ AMT_OF_WORDS = int(input("How many words per topic? "))
 
 from gensim import corpora
 dict = corpora.Dictionary(filesForCorpus)
-dict.filter_extremes(no_below=40, no_above=0.75)
+dict.filter_extremes(no_below=60, no_above=0.50)
 corp = [dict.doc2bow(script) for script in filesForCorpus]
 
 import pickle
@@ -346,7 +346,7 @@ pickle.dump(corp, open('corpus.pkl', 'wb'))
 dict.save('dictionary.gensim')
 
 import gensim
-ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = 10, id2word = dict, passes = 2)
+ldamodel = gensim.models.ldamodel.LdaModel(corp, num_topics = AMT_OF_TOPICS, id2word = dict, passes = 10)
 mod = 'model' + str(AMT_OF_TOPICS) + '.gensim'
 ldamodel.save(mod)
 
@@ -387,7 +387,7 @@ for seinScript in scriptInfo:
 
     #updates the lists with the information from the given episode
     for i in range(10):
-        if len(listOfRelTopics) > checkbox:
+        if len(listOfRelTopics) > checkbox: 
             temp = listOfRelTopics[checkbox]
             if temp[0] == i:
                 totalPercTopics[i] += temp[1]
@@ -403,7 +403,7 @@ for seinScript in scriptInfo:
             totalPercTopics[i] += 0.002
         
 
-    mostRelTopicList.append(mostRelTopic)
+    mostRelTopicList.append((mostRelTopic + 1))
     mostRelTopic = 0
     relTopicPerc = 0.0
 
