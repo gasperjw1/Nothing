@@ -252,8 +252,7 @@ with open('./initialInformation/comedyScripts.csv', 'r') as read_obj:
         counterEnds = 0
         cleanedScript = ""
 
-        for mName in row['Name']:
-            movieNames.append(mName)
+        movieNames.append(row['Name'])
 
         for word in row['Content'].split(' '):
             if "<" not in word:
@@ -306,10 +305,10 @@ with open('./initialInformation/comedyScripts.csv', 'r') as read_obj:
 
     print('Done with Film Scripts')
 
-    df = pd.DataFrame({
+    df6 = pd.DataFrame({
         'Movie Name': movieNames,
         'Script': movieScripts})
-    df.to_csv('results/cleanedMovieScripts.csv', index=False)
+    df6.to_csv('results/cleanedMovieScripts.csv', index=False)
 
 # with open('bunchOfScripts.csv') as manyAScript:
 #     for aScript in manyAScript:
