@@ -11,6 +11,7 @@ import csv
 from csv import DictReader
 import sys
 
+
 ##############################################################
 ##############################################################
 ##############################################################
@@ -113,9 +114,10 @@ stopWords = set(nltk.corpus.stopwords.words('english'))
 from nltk import word_tokenize, pos_tag
 nltk.download('averaged_perceptron_tagger')
 
+
 def setUp(script):
 
-    is_noun_adj = lambda pos: pos[:2] == 'NN'# or pos[:2] == 'JJ'
+    is_noun_adj = lambda pos: pos[:2] == 'NN' or pos[:2] == 'JJ'
 
     tokens = tokenize(script)
     tokens = [tk for tk in tokens if len(tk) > 4]
@@ -372,7 +374,7 @@ percPerEpisode = [] #to store the average relevance of each topic in comparison 
 mostRelTopicList = [] #to store the most relevant each topic in comparison to the each episode
 
 #range is total number of topics. We initializing both arrays.
-for i in range(10):
+for i in range(AMT_OF_TOPICS):
 	totalPercTopics.append(0.0)
 	percPerEpisode.append([])
 
@@ -386,7 +388,7 @@ for seinScript in scriptInfo:
     checkbox = 0
 
     #updates the lists with the information from the given episode
-    for i in range(10):
+    for i in range(AMT_OF_TOPICS):
         if len(listOfRelTopics) > checkbox: 
             temp = listOfRelTopics[checkbox]
             if temp[0] == i:

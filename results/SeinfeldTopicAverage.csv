@@ -1,11 +1,11 @@
 Topics,Average Relevance
-"(0, '0.050*""officer"" + 0.038*""security"" + 0.024*""buddy"" + 0.022*""guard"" + 0.014*""prison"" + 0.014*""information"" + 0.011*""bitch"" + 0.011*""crime"" + 0.011*""agent"" + 0.009*""department""')",0.049041223638183015
-"(1, '0.080*""judge"" + 0.031*""angle"" + 0.027*""lawyer"" + 0.024*""court"" + 0.015*""mister"" + 0.014*""honor"" + 0.014*""client"" + 0.013*""officer"" + 0.009*""building"" + 0.009*""radio""')",0.019279777194076978
-"(2, '0.039*""stone"" + 0.037*""scene"" + 0.025*""camera"" + 0.022*""finger"" + 0.018*""truck"" + 0.014*""beach"" + 0.013*""action"" + 0.011*""flower"" + 0.011*""bedroom"" + 0.011*""plant""')",0.0461569874949584
-"(3, '0.024*""walk"" + 0.019*""smile"" + 0.018*""apartment"" + 0.016*""bedroom"" + 0.016*""pull"" + 0.013*""enters"" + 0.013*""hotel"" + 0.013*""move"" + 0.012*""glass"" + 0.011*""step""')",0.26832028514896095
-"(4, '0.027*""customer"" + 0.027*""store"" + 0.016*""apartment"" + 0.015*""record"" + 0.012*""bedroom"" + 0.012*""manager"" + 0.010*""hotel"" + 0.010*""relationship"" + 0.010*""coffee"" + 0.009*""ground""')",0.16615800192753188
-"(5, '0.016*""wanna"" + 0.016*""bitch"" + 0.015*""parent"" + 0.011*""cause"" + 0.010*""college"" + 0.010*""student"" + 0.008*""blood"" + 0.008*""sister"" + 0.007*""clerk"" + 0.007*""goddamn""')",0.28513829581071215
-"(6, '0.030*""crash"" + 0.025*""power"" + 0.024*""guard"" + 0.017*""president"" + 0.012*""step"" + 0.012*""gentleman"" + 0.011*""ground"" + 0.011*""security"" + 0.011*""pull"" + 0.010*""smile""')",0.030131835623178595
-"(7, '0.067*""master"" + 0.028*""dissolve"" + 0.012*""letter"" + 0.011*""worker"" + 0.010*""gentleman"" + 0.010*""nurse"" + 0.010*""power"" + 0.009*""service"" + 0.009*""player"" + 0.009*""blood""')",0.03961861629538567
-"(8, '0.074*""president"" + 0.019*""radio"" + 0.015*""reporter"" + 0.014*""uncle"" + 0.014*""mister"" + 0.014*""sister"" + 0.012*""gentleman"" + 0.012*""member"" + 0.010*""flight"" + 0.010*""secretary""')",0.07070672032410631
-"(9, '0.264*""mile"" + 0.113*""draft"" + 0.048*""agent"" + 0.020*""action"" + 0.018*""cousin"" + 0.014*""hotel"" + 0.012*""guest"" + 0.011*""clerk"" + 0.010*""client"" + 0.009*""crime""')",0.008804664252114229
+"(0, '0.051*""officer"" + 0.047*""crash"" + 0.028*""mister"" + 0.025*""double"" + 0.019*""worker"" + 0.016*""daddy"" + 0.016*""radio"" + 0.015*""scene"" + 0.015*""dissolve"" + 0.010*""sister""')",0.024897395373872398
+"(1, '0.095*""master"" + 0.039*""security"" + 0.030*""guard"" + 0.017*""scene"" + 0.017*""sharp"" + 0.011*""service"" + 0.011*""power"" + 0.011*""elevator"" + 0.009*""crime"" + 0.008*""social""')",0.018823810360944746
+"(2, '0.028*""draft"" + 0.022*""officer"" + 0.021*""agent"" + 0.019*""judge"" + 0.014*""goddamn"" + 0.014*""hotel"" + 0.013*""clerk"" + 0.009*""store"" + 0.008*""court"" + 0.008*""insurance""')",0.037157149577979
+"(3, '0.254*""mile"" + 0.043*""power"" + 0.032*""gentleman"" + 0.014*""stone"" + 0.013*""member"" + 0.008*""judge"" + 0.007*""daddy"" + 0.007*""client"" + 0.006*""line"" + 0.005*""husband""')",0.008191892951303585
+"(4, '0.015*""buddy"" + 0.012*""sister"" + 0.011*""uncle"" + 0.008*""asshole"" + 0.007*""manager"" + 0.007*""chick"" + 0.006*""shoot"" + 0.006*""outta"" + 0.006*""dissolve"" + 0.006*""goin\'""')",0.3325371606624685
+"(5, '0.059*""president"" + 0.025*""general"" + 0.014*""large"" + 0.009*""action"" + 0.009*""stone"" + 0.008*""finger"" + 0.008*""smile"" + 0.007*""secretary"" + 0.007*""space"" + 0.007*""pull""')",0.03670609685478053
+"(6, '0.012*""american"" + 0.010*""customer"" + 0.010*""parent"" + 0.010*""blood"" + 0.009*""hospital"" + 0.008*""nurse"" + 0.007*""green"" + 0.007*""record"" + 0.007*""store"" + 0.006*""chief""')",0.09730318253419616
+"(7, '0.043*""final"" + 0.017*""third"" + 0.013*""nurse"" + 0.010*""queen"" + 0.009*""parent"" + 0.009*""marry"" + 0.008*""computer"" + 0.008*""knife"" + 0.007*""system"" + 0.007*""birthday""')",0.08756519374382597
+"(8, '0.016*""dissolve"" + 0.015*""angle"" + 0.010*""move"" + 0.010*""queen"" + 0.007*""pull"" + 0.007*""truck"" + 0.007*""camera"" + 0.007*""station"" + 0.007*""step"" + 0.007*""animal""')",0.034426585978659004
+"(9, '0.021*""apartment"" + 0.018*""smile"" + 0.015*""walk"" + 0.014*""bedroom"" + 0.010*""hotel"" + 0.010*""pull"" + 0.009*""glass"" + 0.008*""camera"" + 0.008*""enters"" + 0.008*""kitchen""')",0.3056783116017894
