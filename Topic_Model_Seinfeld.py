@@ -346,16 +346,12 @@ mystery = ['clue', 'murder', 'detective', 'weapon', 'doubt', 'investigation', 'a
 
 genresList = [comedy,romance,drama,childrens,family,mystery]
 
-AMT_OF_TOPICS = 7 # int(input("How many topics? "))
-AMT_OF_WORDS = 9  # int(input("How many words per topic? "))
+AMT_OF_TOPICS = 6
+AMT_OF_WORDS = 9
 
 from gensim import corpora
-dict = corpora.Dictionary( genresList )# filesForCorpus)
-# dict.filter_extremes(no_below=60, no_above=0.50)
-# corp = [dict.doc2bow(script) for script in filesForCorpus]
+dict = corpora.Dictionary( genresList )
 corp = [dict.doc2bow(genre) for genre in genresList]
-
-
 
 import pickle
 pickle.dump(corp, open('corpus.pkl', 'wb'))
