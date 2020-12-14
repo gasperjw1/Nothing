@@ -235,82 +235,86 @@ with open('./initialInformation/seinfeld_scripts.csv', 'r') as read_obj:
 ##############################################################
 ##############################################################
 
+##############################################################
+
 filesForCorpus = []
 movieNames = []
 movieScripts = []
 counter  = 0
 
-#with open('bunchOfScripts.csv', 'r') as read_obj:
-with open('./initialInformation/comedyScripts.csv', 'r') as read_obj:
-    csv_dict_reader = DictReader(read_obj)
+# #with open('bunchOfScripts.csv', 'r') as read_obj:
+# with open('./initialInformation/comedyScripts.csv', 'r') as read_obj:
+#     csv_dict_reader = DictReader(read_obj)
 
-    for row in csv_dict_reader:
-        stop = False
-        script2 = ""
-        script3 = ""
-        script4 = ""
-        script5 = ""
-        script6 = ""
-        counterEnds = 0
-        cleanedScript = ""
+#     for row in csv_dict_reader:
+#         stop = False
+#         script2 = ""
+#         script3 = ""
+#         script4 = ""
+#         script5 = ""
+#         script6 = ""
+#         counterEnds = 0
+#         cleanedScript = ""
 
-        movieNames.append(row['Name'])
+#         movieNames.append(row['Name'])
 
-        for word in row['Content'].split(' '):
-            if "<" not in word:
-                script2 = script2 + ' ' + word
+#         for word in row['Content'].split(' '):
+#             if "<" not in word:
+#                 script2 = script2 + ' ' + word
         
-        #print(script2)
+#         #print(script2)
 
-        for word in script2.split(' '):
-            if '(' in word:
-                stop = True
+#         for word in script2.split(' '):
+#             if '(' in word:
+#                 stop = True
             
-            if not stop:
-                script3 = script3 + " " + word
+#             if not stop:
+#                 script3 = script3 + " " + word
 
-            if ')' in word:
-                stop = False
+#             if ')' in word:
+#                 stop = False
         
-        #print(script3)
+#         #print(script3)
         
-        stop = False
+#         stop = False
 
-        for word in script3.split(' '):
-            #print(word)
-            if len(word) > 0:# and "\n" not in word:
-                script4 = script4 + " " + word
+#         for word in script3.split(' '):
+#             #print(word)
+#             if len(word) > 0:# and "\n" not in word:
+#                 script4 = script4 + " " + word
 
 
-        for word in script4.split(' '):
-            tempWord = ""
-            for letter in word:
-                if letter == "." or letter == "!" or letter == "?":
-                    tempWord = tempWord + " "
-                else:
-                    tempWord = tempWord + letter
+#         for word in script4.split(' '):
+#             tempWord = ""
+#             for letter in word:
+#                 if letter == "." or letter == "!" or letter == "?":
+#                     tempWord = tempWord + " "
+#                 else:
+#                     tempWord = tempWord + letter
 
-            cleanedScript = cleanedScript + " " + tempWord
+#             cleanedScript = cleanedScript + " " + tempWord
 
-        counter += 1
+#         counter += 1
 
-        t = setUp(cleanedScript)
+#         t = setUp(cleanedScript)
 
-        print(counter)
+#         print(counter)
 
-        filesForCorpus.append(t)
+#         filesForCorpus.append(t)
 
-        movieScripts.append(cleanedScript)
+#         movieScripts.append(cleanedScript)
 
-        # if counter >= 300:
-        #     break
+#         # if counter >= 300:
+#         #     break
 
-    print('Done with Film Scripts')
+#     print('Done with Film Scripts')
 
-    df6 = pd.DataFrame({
-        'Movie Name': movieNames,
-        'Script': movieScripts})
-    df6.to_csv('results/cleanedMovieScripts.csv', index=False)
+#     df6 = pd.DataFrame({
+#         'Movie Name': movieNames,
+#         'Script': movieScripts})
+#     df6.to_csv('results/cleanedMovieScripts.csv', index=False)
+
+##############################################################
 
 # with open('bunchOfScripts.csv') as manyAScript:
 #     for aScript in manyAScript:
@@ -333,15 +337,25 @@ with open('./initialInformation/comedyScripts.csv', 'r') as read_obj:
 ##############################################################
 ##############################################################
 
+comedy = ['hilarious', 'enjoy', 'fun', 'crazy','absurd', 'ironic', 'laugh', 'funny', 'ridiculous']
+romance = ['relationship', 'marriage', 'like', 'admire', 'passion', 'love', 'connection', 'communication', 'divorce']
+drama = ['intense', 'serious',  'sad',  'conflict', 'life', 'death', 'pain', 'mad', 'cry']
+childrens = ['cartoon', 'fantasy', 'adventure', 'corny', 'light', 'educational', 'family', 'school', 'friendship']
+family = ['brother', 'sister', 'father', 'mother', 'relationship', 'love', 'friend', 'family']
+mystery = ['clue', 'murder', 'detective', 'weapon', 'doubt', 'investigation', 'alibi', 'motive', 'victim']
 
+genresList = [comedy,romance,drama,childrens,family,mystery]
 
-AMT_OF_TOPICS = int(input("How many topics? "))
-AMT_OF_WORDS = int(input("How many words per topic? "))
+AMT_OF_TOPICS = 7 # int(input("How many topics? "))
+AMT_OF_WORDS = 9  # int(input("How many words per topic? "))
 
 from gensim import corpora
-dict = corpora.Dictionary(filesForCorpus)
-dict.filter_extremes(no_below=60, no_above=0.50)
-corp = [dict.doc2bow(script) for script in filesForCorpus]
+dict = corpora.Dictionary( genresList )# filesForCorpus)
+# dict.filter_extremes(no_below=60, no_above=0.50)
+# corp = [dict.doc2bow(script) for script in filesForCorpus]
+corp = [dict.doc2bow(genre) for genre in genresList]
+
+
 
 import pickle
 pickle.dump(corp, open('corpus.pkl', 'wb'))

@@ -1,11 +1,7 @@
 Topics,Average Relevance
-"(0, '0.051*""officer"" + 0.047*""crash"" + 0.028*""mister"" + 0.025*""double"" + 0.019*""worker"" + 0.016*""daddy"" + 0.016*""radio"" + 0.015*""scene"" + 0.015*""dissolve"" + 0.010*""sister""')",0.024897395373872398
-"(1, '0.095*""master"" + 0.039*""security"" + 0.030*""guard"" + 0.017*""scene"" + 0.017*""sharp"" + 0.011*""service"" + 0.011*""power"" + 0.011*""elevator"" + 0.009*""crime"" + 0.008*""social""')",0.018823810360944746
-"(2, '0.028*""draft"" + 0.022*""officer"" + 0.021*""agent"" + 0.019*""judge"" + 0.014*""goddamn"" + 0.014*""hotel"" + 0.013*""clerk"" + 0.009*""store"" + 0.008*""court"" + 0.008*""insurance""')",0.037157149577979
-"(3, '0.254*""mile"" + 0.043*""power"" + 0.032*""gentleman"" + 0.014*""stone"" + 0.013*""member"" + 0.008*""judge"" + 0.007*""daddy"" + 0.007*""client"" + 0.006*""line"" + 0.005*""husband""')",0.008191892951303585
-"(4, '0.015*""buddy"" + 0.012*""sister"" + 0.011*""uncle"" + 0.008*""asshole"" + 0.007*""manager"" + 0.007*""chick"" + 0.006*""shoot"" + 0.006*""outta"" + 0.006*""dissolve"" + 0.006*""goin\'""')",0.3325371606624685
-"(5, '0.059*""president"" + 0.025*""general"" + 0.014*""large"" + 0.009*""action"" + 0.009*""stone"" + 0.008*""finger"" + 0.008*""smile"" + 0.007*""secretary"" + 0.007*""space"" + 0.007*""pull""')",0.03670609685478053
-"(6, '0.012*""american"" + 0.010*""customer"" + 0.010*""parent"" + 0.010*""blood"" + 0.009*""hospital"" + 0.008*""nurse"" + 0.007*""green"" + 0.007*""record"" + 0.007*""store"" + 0.006*""chief""')",0.09730318253419616
-"(7, '0.043*""final"" + 0.017*""third"" + 0.013*""nurse"" + 0.010*""queen"" + 0.009*""parent"" + 0.009*""marry"" + 0.008*""computer"" + 0.008*""knife"" + 0.007*""system"" + 0.007*""birthday""')",0.08756519374382597
-"(8, '0.016*""dissolve"" + 0.015*""angle"" + 0.010*""move"" + 0.010*""queen"" + 0.007*""pull"" + 0.007*""truck"" + 0.007*""camera"" + 0.007*""station"" + 0.007*""step"" + 0.007*""animal""')",0.034426585978659004
-"(9, '0.021*""apartment"" + 0.018*""smile"" + 0.015*""walk"" + 0.014*""bedroom"" + 0.010*""hotel"" + 0.010*""pull"" + 0.009*""glass"" + 0.008*""camera"" + 0.008*""enters"" + 0.008*""kitchen""')",0.3056783116017894
+"(0, '0.020*""love"" + 0.020*""relationship"" + 0.020*""death"" + 0.020*""mother"" + 0.020*""fun"" + 0.020*""family"" + 0.020*""adventure"" + 0.020*""father"" + 0.020*""laugh""')",0.051995885023974224
+"(1, '0.020*""love"" + 0.020*""relationship"" + 0.020*""family"" + 0.020*""fantasy"" + 0.020*""mother"" + 0.020*""funny"" + 0.020*""communication"" + 0.020*""death"" + 0.020*""admire""')",0.05199588466943665
+"(2, '0.044*""crazy"" + 0.044*""ridiculous"" + 0.044*""enjoy"" + 0.044*""absurd"" + 0.044*""ironic"" + 0.044*""hilarious"" + 0.044*""laugh"" + 0.044*""funny"" + 0.044*""fun""')",0.28451790218770673
+"(3, '0.067*""motive"" + 0.067*""alibi"" + 0.067*""victim"" + 0.067*""weapon"" + 0.067*""murder"" + 0.067*""clue"" + 0.067*""investigation"" + 0.067*""detective"" + 0.067*""doubt""')",0.06905134764118967
+"(4, '0.067*""intense"" + 0.067*""serious"" + 0.067*""mad"" + 0.067*""cry"" + 0.067*""life"" + 0.067*""sad"" + 0.067*""conflict"" + 0.067*""pain"" + 0.067*""death""')",0.09541156437692487
+"(5, '0.085*""family"" + 0.046*""love"" + 0.046*""relationship"" + 0.046*""friendship"" + 0.046*""cartoon"" + 0.046*""corny"" + 0.046*""school"" + 0.046*""friend"" + 0.046*""educational""')",0.445952756637284
