@@ -10,7 +10,7 @@ We use an LDA topic model approach to analyze the show _Seinfeld_ and whether or
 
 ## Build
 
-To run the program, run the Python program `Topic_Model_Seinfeld.py`.
+To run the program, run the Python program `Topic_Model_Seinfeld.py`. The program has already been ran, but can be ran again for testing purposes. If ran, all the other files will be overwritten with updated information due to running the program.
 
 ## Notes
 
@@ -23,4 +23,4 @@ Packages required to successfully run this program are:
 
 
 All the necessary information to run the program is located in the folder named `initialInformation`.
-All the csv files created as a result of running the program will be located in the folder named `results`.
+All the csv files created as a result of running the program will be located in the folder named `results`. Both these folders currently contain files due to the program being ran already.
