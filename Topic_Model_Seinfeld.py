@@ -1,3 +1,13 @@
+####### Code written by Yash Mahtani
+####### Creates a Topic Model that analyzes the show Seinfeld given a set of topics defined by a given corpus
+
+
+##############################################################
+##############################################################
+# Initial set of imports for the following code
+##############################################################
+##############################################################
+
 from nltk.corpus.reader.wordnet import Lemma
 from nltk.tokenize import word_tokenize
 from nltk.tag import pos_tag
@@ -103,6 +113,17 @@ def getLemma2(word):
 nltk.download('stopwords')
 stopWords = set(nltk.corpus.stopwords.words('english'))
 
+
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+# Part 2
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+
 ##############################################################
 ##############################################################
 # This function sets up the script to be analyzed by the LDA
@@ -126,17 +147,6 @@ def setUp(script):
     tokens = [getLemma2(tk) for tk in tokens]
 
     return tokens
-
-
-##############################################################
-##############################################################
-##############################################################
-##############################################################
-# Part 2
-##############################################################
-##############################################################
-##############################################################
-##############################################################
 
 ##############################################################
 ##############################################################
@@ -223,7 +233,8 @@ with open('./initialInformation/seinfeld_scripts.csv', 'r') as read_obj:
 
 ##############################################################
 ##############################################################
-# Creates a corpus and a dictionary using the Bag-of-Words
+# Creates a corpus and a dictionary using a self-made 
+# Bag-of-Words. Then we use this to create our LDA Model.
 ##############################################################
 ##############################################################
 
@@ -266,12 +277,12 @@ topics = ldamodel.print_topics(num_words = AMT_OF_WORDS)
 for topic in topics:
     print(topic)
 
-epNum = 0 #to keep track of the amount of episodes
-mostRelTopic = 0 #middle-man type variable
-relTopicPerc = 0.0 #middle-man type vairable
-totalPercTopics = [] #to store the average relevance of each topic in comparison to the entire show
-percPerEpisode = [] #to store the average relevance of each topic in comparison to the each episode
-mostRelTopicList = [] #to store the most relevant each topic in comparison to the each episode
+epNum = 0               ### To keep track of the amount of episodes
+mostRelTopic = 0        ### Middle-man type variable
+relTopicPerc = 0.0      ### Middle-man type vairable
+totalPercTopics = []    ### To store the average relevance of each topic in comparison to the entire show
+percPerEpisode = []     ### To store the average relevance of each topic in comparison to the each episode
+mostRelTopicList = []   ### To store the most relevant topic for each episode
 
 # Range is total number of topics. We initializing both arrays.
 for i in range(AMT_OF_TOPICS):
@@ -287,7 +298,8 @@ for seinScript in scriptInfo:
     epNum += 1
     checkbox = 0
 
-    # Updates the lists with the information from the given episode
+    # Updates the lists with the information from the given episode 
+    # after running it through the LDA Model
     for i in range(AMT_OF_TOPICS):
         if len(listOfRelTopics) > checkbox: 
             temp = listOfRelTopics[checkbox]
@@ -311,6 +323,17 @@ for seinScript in scriptInfo:
 
 for i in range(AMT_OF_TOPICS):
     totalPercTopics[i] /= epNum
+
+
+##############################################################
+##############################################################
+##############################################################
+##############################################################
+# Part 4
+##############################################################
+##############################################################
+##############################################################
+##############################################################
 
 ##############################################################
 ##############################################################
