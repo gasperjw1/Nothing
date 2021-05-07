@@ -21,6 +21,6 @@ Packages required to successfully run this program are:
 - gensim
 - pickle
 
-
 All the necessary information to run the program is located in the folder named `initialInformation`.
 All the csv files created as a result of running the program will be located in the folder named `results`. Both these folders currently contain files due to the program being ran already.
+In terms of reading the results, if any given set of words (that defines a certain topic) does not encompass at least 50% of the entire show, then we deem that that topic (generated from our corpus) does not define the topic of that show.
